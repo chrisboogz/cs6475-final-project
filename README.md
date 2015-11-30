@@ -57,11 +57,11 @@ This is where the magic happens.
   [ 0,  0, 0]
 ]
 ```
-* `grayscale` - This filter converts the RGBA image to greyscale using tracking.js. I pretty much only added this one because it looks neat and it was really simple to set up.
+* `grayscale` - This filter converts the RGBA image to grayscale using tracking.js. I pretty much only added this one because it looks neat and it was really simple to set up.
 
 ### Room for improvement
 
 During development, I ran into a few things that I'd potentially improve on in a later iteration:
-* Support for DB storage - It would be really nice to be able to hook my backend up to something like MongoDB and eliminate any potential for memory shortages. However, I didn't want anyone to have to install a full-featured DB simply to play around with my project, so I kept it out for now. A more serious build would definitely use a DB connection, though.
+* Support for DB storage - It would be really nice to be able to hook my backend up to something like MongoDB and eliminate any potential for out-of-memory issues. However, I didn't want anyone to have to install a full-featured DB simply to play around with my project, so I kept it out for now. A more serious build would definitely use a DB connection, though - perhaps an optional DB connection which could be set in config.
 * Multi-user support - User management would be cool, and would open the door for things like image sharing and potentially collaboration if the editing feature-set were to expand.
 * Backend optimizations - Node.js is a single-threaded webserver, so expensive processing not only slows down a single user - it has the potential to hamper every single user's experience. The filter methods are especially expensive, so in a production environment those would need to be moved out of Node's event loop and into asynchronous processes.
