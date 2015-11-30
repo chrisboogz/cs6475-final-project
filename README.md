@@ -6,7 +6,7 @@ Hey! This is the final project I threw together for CS 6475. It's a Node.js webs
 
 In order to run this on your machine, you'll need [node.js and npm](https://nodejs.org/en/) installed (preferably the latest -- that's what I built the project on, and I haven't tested any older builds). You'll also need to have [node-gyp](https://github.com/nodejs/node-gyp) working correctly.
 
-Once you've got those installed you can download and unzip, or clone, this repository, navigate to the root, and execute the following commands:
+Once you've got those installed you can download and unzip, or clone, this repository, navigate to the project root, and execute the following commands:
 
 ```
 npm install
