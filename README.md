@@ -33,8 +33,8 @@ This is where the magic happens.
 
 * `/upload` - The frontend POSTs to this endpoint with a single image the user wishes to upload. Upon reception, the image is converted to a `.png`, then parsed out into a pixel array (with some metadata attached) using [pngjs](https://github.com/niegowski/node-pngjs). That pixel array has an ID generated for it, and it's stored in memory. The backend returns the generated ID to the frontend.
 * `/images` - A GET to this endpoint returns every image stored in memory as `base64` encoded strings. The backend uses pngjs to repack the parsed pixel arrays back into `.png` format, then converts the binary buffer containing these images into the strings it returns. This conversion is used for every route under `/images`.
-* `/images/:id` - A GET to this endpoint (where :id is a specified image ID) returns the image stored at that ID.
-* `/images/:id/:filter` - A GET to this endpoint (where :id is a specified image ID and :filter is a specified filter) returns the image stored at that ID after processing it with the specified filter.
+* `/images/:id` - A GET to this endpoint (where `:id` is a specified image ID) returns the image stored at that ID.
+* `/images/:id/:filter` - A GET to this endpoint (where `:id` is a specified image ID and `:filter` is a specified filter) returns the image stored at that ID after processing it with the specified filter.
  
 #### Filters
 
@@ -57,7 +57,7 @@ This is where the magic happens.
   [ 0,  0, 0]
 ]
 ```
-* `greyscale` - This filter converts the RGBA image to greyscale using tracking.js. I pretty much only added this one because it looks neat and it was really simple to set up.
+* `grayscale` - This filter converts the RGBA image to greyscale using tracking.js. I pretty much only added this one because it looks neat and it was really simple to set up.
 
 ### Room for improvement
 
