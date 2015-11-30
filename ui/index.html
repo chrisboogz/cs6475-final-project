@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+    <head>
+        <title>CS 6475 Final Project</title>
+
+        <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="lib/font-awesome/css/font-awesome.min.css">
+
+        <link rel="stylesheet" href="app.css">
+
+        <script type="text/javascript" src="lib/angular.min.js"></script>
+        <script type="text/javascript" src="lib/ui-bootstrap-tpls-0.14.3.min.js"></script>
+        <script type="text/javascript" src="lib/ng-file-upload/ng-file-upload.min.js"></script>
+        <script type="text/javascript" src="lib/ng-file-upload/ng-file-upload-shim.min.js"></script>
+
+        <script type="text/javascript" src="app.js"></script>
+        <script type="text/javascript" src="app-controller.js"></script>
+        <script type="text/javascript" src="upload-controller.js"></script>
+        <script type="text/javascript" src="images.js"></script>
+
+    </head>
+    <body ng-controller="AppCtrl" class="container-fluid">
+        <div class="row main-row">
+            <div class="loading-display" ng-show="loading">
+                <i class="fa fa-cog fa-spin fa-3x"></i>
+            </div>
+            <div class="col-xs-9 image-col">
+                <div class="image-container" ng-show="activeId">
+                    <span class="helper"></span><img ng-src="{{ images[activeId] }}">
+                </div>
+                <div class="image-cancel no-select" ng-show="activeId && activeFilter" ng-click="clearFilter()" title="Clear filter">
+                    <i class="fa fa-ban fa-2x"></i>
+                </div>
+                <div class="image-actions" ng-show="activeId">
+                    <div class="image-action" ng-click="applyFilter('blur')" ng-class="activeFilter === 'blur' ? 'active' : 'no-select'">
+                        Blur
+                    </div><!--
+                 --><div class="image-action" ng-click="applyFilter('sharpen')" ng-class="activeFilter === 'sharpen' ? 'active' : 'no-select'">
+                        Sharpen
+                    </div><!--
+                 --><div class="image-action" ng-click="applyFilter('emboss')" ng-class="activeFilter === 'emboss' ? 'active' : 'no-select'">
+                        Emboss
+                    </div><!--
+                 --><div class="image-action" ng-click="applyFilter('grayscale')" ng-class="activeFilter === 'grayscale' ? 'active' : 'no-select'">
+                        Grayscale
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-3 thumb-col">
+                <div class="thumb-header">
+                    Uploaded Images
+                    <button type="button" class="btn btn-sm btn-success" ng-click="openUploadForm()">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+                </div>
+                <div class="thumb-list">
+                    <div class="image-thumb no-select" ng-repeat="(id, data) in images" ng-click="selectImage(id)" ng-class="{ 'active': activeId === id }">
+                        <span class="thumb-helper"></span><img ng-src="{{ data }}">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
