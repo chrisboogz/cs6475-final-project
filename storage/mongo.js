@@ -4,12 +4,12 @@ var ObjectID = mongo.ObjectID;
 
 var config = require('config');
 
-var url = config.db.url;
-var db, images;
-
 var dbEnabled = process.env.DB || config.db.enabled;
 
 if(dbEnabled) {
+    var url = process.env.MONGOHQ_URL || config.db.url;
+    var db, images;
+
     MongoClient.connect(url, function(err, database) {
         if(!err) {
             db = database;
