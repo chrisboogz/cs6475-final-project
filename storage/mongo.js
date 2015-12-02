@@ -7,16 +7,20 @@ var config = require('config');
 var url = config.db.url;
 var db, images;
 
-MongoClient.connect(url, function(err, database) {
-    if(!err) {
-        db = database;
-        images = database.collection('images');
-        console.log("MongoDB connection established");
-    }
-    else {
-        console.log("Error establishing MongoDB connection");
-    }
-});
+var dbEnabled = process.env.DB || config.db.enabled;
+
+if(dbEnabled) {
+    MongoClient.connect(url, function(err, database) {
+        if(!err) {
+            db = database;
+            images = database.collection('images');
+            console.log("MongoDB connection established");
+        }
+        else {
+            console.log("Error establishing MongoDB connection");
+        }
+    });
+}
 
 function put(image, callback) {
     if(!images) {

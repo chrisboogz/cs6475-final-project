@@ -18,15 +18,15 @@ function getAll(callback) {
     for(var id in images) {
         result.push(images[id]);
     }
-    
+
     callback(result);
 }
 
-function remove(id) {
+function remove(id, callback) {
     var image = images[id];
     delete images[id];
 
-    callback(image);
+    callback();
 }
 
 module.exports = {

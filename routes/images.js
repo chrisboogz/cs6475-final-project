@@ -113,7 +113,6 @@ function removeImage(req, res) {
     var id = req.params.id;
     if(id) {
         storage.remove(id, function() {
-            console.log("test");
             res.status(200).send();
         });
     }
