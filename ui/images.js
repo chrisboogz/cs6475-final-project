@@ -23,9 +23,14 @@ app.factory('Images', ['$http', function($http) {
         return $http.get('images/' + id + '/' + filter);
     };
 
+    var remove = function(id) {
+        return $http.delete('images/' + id);
+    };
+
     return {
         upload: upload,
         get: get,
-        getFiltered: getFiltered
+        getFiltered: getFiltered,
+        remove: remove
     };
 }]);

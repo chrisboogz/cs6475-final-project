@@ -10,65 +10,66 @@ var router = express.Router();
 
 function getImage(req, res) {
     var id = req.params.id;
-    var imageData = storage.get(id);
 
-    if(!imageData) {
-        res.status(400).send('invalid id');
-        return;
-    }
+    storage.get(id, function(imageData) {
+        if(!imageData) {
+            res.status(400).send('invalid id');
+            return;
+        }
 
-    makePng(imageData, res).then(function(image) {
-        res.status(200).send(image);
+        makePng(imageData, res).then(function(image) {
+            res.status(200).send(image);
+        });
     });
 }
 
 function getAll(req, res) {
-    var data = storage.getAll();
+    storage.getAll(function(data) {
+        var promises = [];
+        var images = [];
 
-    var promises = [];
-    var images = [];
+        function addPng(image, id) {
+            images.push(image);
+        }
 
-    function addPng(image, id) {
-        images.push(image);
-    }
+        for(var i=0; i<data.length; i++) {
+            var promise = makePng(data[i]);
 
-    for(var i=0; i<data.length; i++) {
-        var promise = makePng(data[i]);
+            promise.then(addPng);
+            promises.push(promise);
+        }
 
-        promise.then(addPng);
-        promises.push(promise);
-    }
-
-    q.all(promises).then(function() {
-        res.status(200).send(images);
+        q.all(promises).then(function() {
+            res.status(200).send(images);
+        });
     });
 }
 
 function getFiltered(req, res) {
     var id = req.params.id;
     var filter = req.params.filter;
-    var imageData = storage.get(id);
+    storage.get(id, function(imageData) {
+        if(!imageData) {
+            res.status(400).send('invalid id');
+            return;
+        }
 
-    if(!imageData) {
-        res.status(400).send('invalid id');
-        return;
-    }
+        if(filter === 'blur') {
+            imageData = filters.blur(imageData);
+        }
+        else if(filter === 'sharpen') {
+            imageData = filters.sharpen(imageData);
+        }
+        else if(filter === 'emboss') {
+            imageData = filters.emboss(imageData);
+        }
+        else if(filter === 'grayscale') {
+            imageData = filters.grayscale(imageData);
+        }
 
-    if(filter === 'blur') {
-        imageData = filters.blur(imageData);
-    }
-    else if(filter === 'sharpen') {
-        imageData = filters.sharpen(imageData);
-    }
-    else if(filter === 'emboss') {
-        imageData = filters.emboss(imageData);
-    }
-    else if(filter === 'grayscale') {
-        imageData = filters.grayscale(imageData);
-    }
-
-    makePng(imageData, res).then(function(image) {
-        res.status(200).send(image);
+        makePng(imageData, res).then(function(image) {
+            res.status(200).send(image);
+        });
     });
 }
 
@@ -92,7 +93,7 @@ function makePng(imageData) {
         var buffer = Buffer.concat(buffers);
 
         var image = {
-            id: imageData.id,
+            id: imageData._id,
             data: 'data:image/png;base64,' + buffer.toString('base64')
         };
 
@@ -108,8 +109,22 @@ function makePng(imageData) {
     return deferred.promise;
 }
 
+function removeImage(req, res) {
+    var id = req.params.id;
+    if(id) {
+        storage.remove(id, function() {
+            console.log("test");
+            res.status(200).send();
+        });
+    }
+    else {
+        res.status(400).send("need to provide an id");
+    }
+}
+
 router.get('/', getAll);
 router.get('/:id', getImage);
 router.get('/:id/:filter', getFiltered);
+router.delete('/:id', removeImage);
 
 module.exports = router;

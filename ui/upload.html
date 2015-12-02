@@ -6,7 +6,17 @@
         <div class="form-group">
             <label class="control-label col-xs-4">Image</label>
             <div class="col-xs-8">
-                <input class="form-control upload-input" ngf-select name="file" ng-model="upload" ngf-max-size="4MB" required type="file" accept="image/*">
+                <input 
+                    class="form-control upload-input" 
+                    ngf-select name="file" 
+                    ng-model="upload" 
+                    ngf-max-size="4MB" 
+                    required 
+                    type="file" 
+                    accept="image/*"
+                    ngf-max-height="2000"
+                    ngf-max-width="2000">
+                <div class="max-dimensions">Max dimensions: 2000x2000</div>
                 <img ng-show="uploadForm.file.$valid" ngf-thumbnail="upload" class="upload-thumb"> 
                 <button type="button" class="btn btn-danger" ng-click="upload = null" ng-show="upload">Remove</button>
             </div>

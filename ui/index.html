@@ -54,8 +54,13 @@
                     </button>
                 </div>
                 <div class="thumb-list">
-                    <div class="image-thumb no-select" ng-repeat="(id, data) in images" ng-click="selectImage(id)" ng-class="{ 'active': activeId === id }">
-                        <span class="thumb-helper"></span><img ng-src="{{ data }}">
+                    <div class="image-thumb no-select" ng-repeat="(id, data) in images" ng-class="{ 'active': activeId === id }">
+                        <div class="thumb-container" ng-click="selectImage(id)">
+                            <span class="helper"></span><img ng-src="{{ data }}">
+                        </div>
+                        <button type="button" class="btn btn-sm btn-danger remove-button" ng-click="removeImage(id)" ng-disabled="loading">
+                            <span class="glyphicon glyphicon-minus"></span>
+                        </button>
                     </div>
                 </div>
             </div>

@@ -4,8 +4,6 @@ var mime = require('mime');
 var PNG = require('pngjs').PNG;
 
 var storage = require('../storage/storage');
-var id = require('../id');
-
 var router = express.Router();
 
 function uploadImage(req, res) {
@@ -30,10 +28,10 @@ function uploadImage(req, res) {
 
         image.toBuffer("png", params, function(err, buffer) {
             new PNG().parse(buffer, function(err, data) {
-                data.id = id.generate();
 
-                storage.put(data);
-                res.status(200).send(data.id);
+                storage.put(data, function(id) {
+                    res.status(200).send(id);
+                });
             });
         });
     });

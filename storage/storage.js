@@ -1,30 +1,14 @@
-var _ = require('lodash');
+var config = require('config');
 
-var images = {};
+var dbEnabled = process.env.DB || config.db.enabled;
 
-function put(image) {
-    images[image.id] = image;
+var storage;
+
+if(dbEnabled) {
+    storage = require('./mongo');
+}
+else {
+    storage = require('./inmemory');
 }
 
-function get(id) {
-    return _.cloneDeep(images[id]);
-}
-
-function getAll() {
-    var result = [];
-    for(var id in images) {
-        result.push(images[id]);
-    }
-    return result;
-}
-
-function remove(id) {
-    delete images[id];
-}
-
-module.exports = {
-    put: put,
-    get: get,
-    getAll: getAll,
-    remove: remove
-};
+module.exports = storage;

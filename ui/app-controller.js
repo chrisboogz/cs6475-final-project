@@ -1,12 +1,14 @@
 app.controller('AppCtrl', ['$scope', '$uibModal', '$q', 'Images', 
     function($scope, $uibModal, $q, Images) {
         $scope.images = {};
+        $scope.loading = true;
         Images.get().then(function(response) {
             for(var i=0; i<response.data.length; i++) {
                 var image = response.data[i];
 
                 $scope.images[image.id] = image.data;
             }
+            $scope.loading = false;
         });
 
         $scope.uploadImage = function(image) {
@@ -43,6 +45,19 @@ app.controller('AppCtrl', ['$scope', '$uibModal', '$q', 'Images',
             else {
                 $scope.activeId = id;
             }
+        };
+
+        $scope.removeImage = function(id) {
+            if($scope.loading) {
+                return;
+            }
+            Images.remove(id).then(function() {
+                if(id === $scope.activeId) {
+                    $scope.activeFilter = null;
+                    $scope.activeId = null;
+                }
+                delete $scope.images[id];
+            });
         };
 
         $scope.openUploadForm = function() {

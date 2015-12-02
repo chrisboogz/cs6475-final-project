@@ -1,5 +1,9 @@
 {
     "server": {
         "port": 3000
+    },
+    "db": {
+        "enabled": false,
+        "url": "mongodb://127.0.0.1:27017/final-project"
     }
 }

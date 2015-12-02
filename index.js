@@ -4,6 +4,7 @@ var multer = require('multer');
 
 var upload = require('./routes/upload');
 var images = require('./routes/images');
+var mongo = require('./storage/mongo');
 
 var app = express();
 var storage = multer.memoryStorage();
@@ -18,4 +19,9 @@ var port = process.env.PORT || config.server.port;
 
 var server = app.listen(port, function() {
     console.log("Listening on port " + port);
+});
+
+process.on('uncaughtException', function(err) {
+    // handle the error safely
+    console.log(err);
 });
