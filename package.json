@@ -4,7 +4,8 @@
   "description": "CS6475 final project",
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "start": "node index.js"
   },
   "author": "Chris Bugaj",
   "license": "ISC",
