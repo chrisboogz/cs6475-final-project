@@ -1,5 +1,5 @@
 var express = require('express');
-var config = require('config');
+var config = require('config-heroku');
 var multer = require('multer');
 
 var upload = require('./routes/upload');
